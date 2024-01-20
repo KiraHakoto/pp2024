@@ -24,19 +24,28 @@ class School:
         self.marks = []
 
     def input_students(self):
-        num_students = int(input("Enter number of students: "))
-        for i in range(num_students):
-            id = input("Enter student id: ")
-            name = input("Enter student name: ")
-            while True:
-                dob = input("Enter student DoB (dd/mm/yyyy): ")
-                try:
-                    day, month, year = map(int, dob.split('/'))
-                    datetime.datetime(year, month, day)
-                    break
-                except ValueError:
-                    print("Invalid date. Please enter a valid date format dd/mm/yyyy.")
-            self.students.append(Student(id, name, dob))
+        while True:
+            try:
+                num_students = int(input("Enter number of students: "))
+                if num_students <= 0:
+                    print("The number of students must be a positive integer.")
+                    continue
+                for i in range(num_students):
+                    print(f"Enter information for student {i+1}:")
+                    id = input("Enter student id: ")
+                    name = input("Enter student name: ")
+                    while True:
+                        dob = input("Enter student DoB (dd/mm/yyyy): ")
+                        try:
+                            day, month, year = map(int, dob.split('/'))
+                            datetime.datetime(year, month, day)
+                            break
+                        except ValueError:
+                            print("Invalid date. Please enter a valid date format dd/mm/yyyy.")
+                    self.students.append(Student(id, name, dob))
+                break
+            except ValueError:
+                print("The number of students must be a positive integer.")
 
     def input_courses(self):
         num_courses = int(input("Enter number of courses: "))
