@@ -1,10 +1,20 @@
 import datetime
 
-class Student:
-    def __init__(self, id, name, dob):
+class Person:
+    def __init__(self, id, name):
         self.id = id
         self.name = name
+
+    def get_info(self):
+        return f"ID: {self.id}, Name: {self.name}"
+
+class Student(Person):
+    def __init__(self, id, name, dob):
+        super().__init__(id, name)
         self.dob = dob
+
+    def get_info(self):
+        return f"ID: {self.id}, Name: {self.name}, DoB: {self.dob}"
 
 class Course:
     def __init__(self, id, name):
@@ -48,11 +58,19 @@ class School:
                 print("The number of students must be a positive integer.")
 
     def input_courses(self):
-        num_courses = int(input("Enter number of courses: "))
-        for i in range(num_courses):
-            id = input("Enter course id: ")
-            name = input("Enter course name: ")
-            self.courses.append(Course(id, name))
+        while True:
+            try:
+                num_courses = int(input("Enter number of courses: "))
+                if num_courses <= 0:
+                    print("The number of courses must be a positive integer.")
+                    continue
+                for i in range(num_courses):
+                    id = input("Enter course id: ")
+                    name = input("Enter course name: ")
+                    self.courses.append(Course(id, name))
+                break
+            except ValueError:
+                print("The number of courses must be a positive integer.")
 
     def input_marks(self):
         course_id = input("Select a course by id: ")
@@ -70,7 +88,7 @@ class School:
 
     def list_students(self):
         for student in self.students:
-            print(student.name)
+            print(student.get_info())
 
     def show_marks(self, course_id):
         for mark in self.marks:
